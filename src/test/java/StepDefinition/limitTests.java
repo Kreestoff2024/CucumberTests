@@ -1,5 +1,7 @@
 package StepDefinition;
 
+import utils.RandomData;
+import pages.ContactPage;
 import java.time.Duration;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +19,8 @@ import static org.junit.Assert.fail;
 
 public class limitTests {
 
+    ContactPage contactPage = new ContactPage();
+
     private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     @Given("Je voudrais envoyer un message")
@@ -24,29 +28,49 @@ public class limitTests {
         driver.get("https://automationintesting.online/");
     }
 
-    @When("J'écris {string} dans le champ Name")
-    public void je_ecris_prenom_dans_le_champ_name(String name) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys(name);
+    @When("Je remplis le formulaire avec des données valides")
+    public void remplirFormulaireValide() {
+        contactPage.saisirName("Chris");
+        contactPage.saisirEmail("chris@abc.com");
+        contactPage.saisirPhone("12345678912");
+        contactPage.saisirSubject("Hello");
+        contactPage.saisirMessage("Je suis le meilleur testeur du monde");
     }
 
-    @And("J'écris {string} dans le champ Email")
-    public void je_ecris_email_dans_le_champ_email(String email) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys(email);
+    @And("Je rends le champ {string} invalide avec {int} caractères")
+    public void rendreChampInvalideAvecLongueur(String field, int length) {
+
+        switch (field) {
+            case "Phone":
+                contactPage.saisirPhone(RandomData.randomPhone(length));
+                break;
+            case "Subject":
+                contactPage.saisirSubject(RandomData.randomString(length));
+                break;
+            case "Message":
+                contactPage.saisirMessage(RandomData.randomString(length));
+                break;
+            default:
+                throw new IllegalArgumentException("Champ non géré : " + field);
+        }
     }
 
-    @And("J'écris {string} dans le champ Phone")
-    public void je_ecris_numero_dans_le_champ_phone(String phone) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys(phone);
-    }
+    @And("Je rends le champ {string} valide avec {int} caractères")
+    public void rendreChampvalideAvecLongueur(String field, int length) {
 
-    @And("J'écris {string} dans le champ Subject")
-    public void je_ecris_sujet_dans_le_champ_subject(String subject) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("subject"))).sendKeys(subject);
-    }
-
-    @And("J'écris {string} dans la boîte Message")
-    public void je_ecris_message_dans_la_boite_message(String message) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("description"))).sendKeys(message);
+        switch (field) {
+            case "Phone":
+                contactPage.saisirPhone(RandomData.randomPhone(length));
+                break;
+            case "Subject":
+                contactPage.saisirSubject(RandomData.randomString(length));
+                break;
+            case "Message":
+                contactPage.saisirMessage(RandomData.randomString(length));
+                break;
+            default:
+                throw new IllegalArgumentException("Champ non géré : " + field);
+        }
     }
 
     @And("J'appuie sur Submit")
@@ -70,6 +94,13 @@ public class limitTests {
             }
             attempts++;
         }
+    }
+    @Then("La phrase {string} est affichée")
+    public void la_phrase_affichee(String message) {
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("/html/body/div[2]/div/section[3]/div/div/div/div/div/p[3]")));
+        assertEquals(message, element.getText());
     }
 
     @Then("On voit {string} affiché")
