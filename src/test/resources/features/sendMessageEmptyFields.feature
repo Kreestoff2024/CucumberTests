@@ -16,3 +16,5 @@ Feature: Envoi d'un message avec un champ vide
     |Chris|chris@abc.com|           |Hello  |Je suis le meilleur testeur|Phone may not be blank  |
     |Chris|chris@abc.com|12345678912|       |Je suis le meilleur testeur|Subject may not be blank|
     |Chris|chris@abc.com|12345678912|Hello  |                           |Message may not be blank|
+
+

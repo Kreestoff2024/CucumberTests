@@ -9,11 +9,8 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import static StepDefinition.Hook.driver;
-import org.junit.Assert;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class sendMessageWrongEmail {

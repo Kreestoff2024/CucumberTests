@@ -10,11 +10,8 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import static StepDefinition.Hook.driver;
-
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class limitTests {
@@ -87,7 +84,7 @@ public class limitTests {
                 button.click();
                 clicked = true;
             } catch (ElementClickInterceptedException e) {
-                // Pause courte puis JS click en dernier recours
+
                 try { Thread.sleep(300); } catch (InterruptedException ignored) {}
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
                 clicked = true;

@@ -16,6 +16,7 @@ public class Hook {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--headless");
 
         driver = new ChromeDriver(options);
         driver.manage().window().setSize(new Dimension(1920, 1080));

@@ -11,7 +11,6 @@ public class ContactPage {
 
     private WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    // Méthode utilitaire pour saisir du texte dans un champ
     private void saisirChamp(By locator, String value) {
         WebElement field = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         field.clear();
