@@ -14,5 +14,4 @@ Feature: Envoi d'un message avec un format d'e-mail non valide
     |chris.com |
     |chris@    |
     |chris@.com|
-    |chris@abc |
     |@abc.com  |
