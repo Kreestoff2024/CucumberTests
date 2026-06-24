@@ -2,6 +2,8 @@ package StepDefinition;
 
 import pages.ContactPage;
 import java.time.Duration;
+import java.util.List;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import io.cucumber.java.en.Given;
@@ -69,13 +71,22 @@ public class sendMessageEmptyFields {
         }
     }
 
-    @Then("On voit {string} sur la page")
-    public void le_champ_est_invalide(String message) {
+    @Then("On voit {string} et {string} sur la page")
+    public void on_voit_les_erreurs(String error1, String error2) {
 
-        WebElement element = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.xpath("/html/body/div[2]/div/section[3]/div/div/div/div/div/div/p")));
-        assertEquals(message, element.getText());
+        List<WebElement> errors = wait.until(
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                        By.xpath("//*[@id='contact']//p")));
+
+        List<String> messages = errors.stream()
+                .map(WebElement::getText)
+                .toList();
+
+        assertTrue(messages.contains(error1));
+
+        if (!error2.isBlank()) {
+            assertTrue(messages.contains(error2));
+        }
     }
 
 }
